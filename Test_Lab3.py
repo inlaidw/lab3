@@ -1,67 +1,57 @@
-print("Lab 3 - Software Unit Testing with PyTest")
+import Lab3
 
-SORT_ASCENDING = 0
-SORT_DESCENDING = 1
-
-
-def bubble_sort(arr, sorting_order):
-    # Copy input list to results lis
-    arr_result = arr.copy()
-
-    # Get number of elements in the list
-    n = len(arr_result)
-
-    if n < 10:
-        if n == 0:
-            arr_result = 0
-        else:
-            # Traverse through all array elements
-            for item in arr_result:
-                if not isinstance(item, int):
-                    arr_result = 2
-                    break
-                else:
-                    pass
-            if arr_result != 2:
-                for i in range(n - 1):
-                    # range(n) also work but outer loop will
-                    # repeat one time more than needed.
-
-                    # Last i elements are already in place
-                    for j in range(0, n - i - 1):
-
-                        if sorting_order == SORT_ASCENDING:
-                            if arr_result[j] > arr_result[j + 1]:
-                                arr_result[j], arr_result[j + 1] = arr_result[j + 1], arr_result[j]
+print("Test_Lab3")
 
 
-                        elif sorting_order == SORT_DESCENDING:
-                            if arr_result[j] < arr_result[j + 1]:
-                                arr_result[j], arr_result[j + 1] = arr_result[j + 1], arr_result[j]
+def test_bubble_sort_ascending():
+    result = []
+    input_arr = [64, 34, 25, 12, 22, 11, 90]
+    test_arr = [11, 12, 22, 25, 34, 64, 90]
 
-                        else:
-                            # Return an empty array
-                            arr_result = []
-    else:
-        arr_result = 1
+    result = Lab3.bubble_sort(input_arr, Lab3.SORT_ASCENDING)
 
-    return arr_result
+    assert (result == test_arr)
 
 
-def main():
-    # Driver code to test above
-    arr = [64, 34, 25, 12, 22, 11, 90]
+def test_bubble_sort_descending():
+    result = []
+    input_arr = [64, 34, 25, 12, 22, 11, 90]
+    test_arr = [90, 64, 34, 25, 22, 12, 11]
 
-    # Sort in ascending order
-    result = bubble_sort(arr, SORT_ASCENDING)
-    print("\nSorted array in ascending order: ")
-    print(result)
+    result = Lab3.bubble_sort(input_arr, Lab3.SORT_DESCENDING)
 
-    # Sort in descending order
-    print("Sorted array in ascending order: ")
-    result = bubble_sort(arr, SORT_DESCENDING)
-    print(result)
+    assert (result == test_arr)
 
 
-if __name__ == "__main__":
-    main()
+def test_bubble_sort_invalid():
+    result = []
+    input_arr = [64, 34, 25, 12, 22, 11, 90]
+
+    result = Lab3.bubble_sort(input_arr, 3)
+
+    assert (result == [])
+
+
+def test_bubble_sort_less_than_10():
+    result = []
+    input_arr = [64, 34, 25, 12, 22, 11, 90, 12, 124, 325, 658]
+
+    result = Lab3.bubble_sort(input_arr,Lab3.SORT_ASCENDING)
+
+    assert (result == 1)
+
+def test_bubble_sort_no_number():
+    result = []
+    input_arr = []
+
+    result = Lab3.bubble_sort(input_arr,Lab3.SORT_ASCENDING)
+
+    assert (result == 0)
+
+def test_bubble_sort_not_int():
+    result = []
+    input_arr = [64.3, 34.1, 25.0, 12.7, 22.9, 11.6, 90.5]
+
+    result = Lab3.bubble_sort(input_arr,Lab3.SORT_ASCENDING)
+
+    assert (result == 2)
