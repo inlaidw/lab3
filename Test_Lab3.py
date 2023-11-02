@@ -1,30 +1,67 @@
-import Lab3
+print("Lab 3 - Software Unit Testing with PyTest")
 
-print("Test_Lab3")
+SORT_ASCENDING = 0
+SORT_DESCENDING = 1
 
 
-def test_bubble_sort_ascending():
-    result = []
-    input_arr = [64, 34, 25, 12, 22, 11, 90]
-    test_arr = [11, 12, 22, 25, 34, 64, 90]
+def bubble_sort(arr, sorting_order):
+    # Copy input list to results lis
+    arr_result = arr.copy()
 
-    result = Lab3.bubble_sort(input_arr, Lab3.SORT_ASCENDING)
+    # Get number of elements in the list
+    n = len(arr_result)
 
-    assert (result == test_arr)
+    if n < 10:
+        if n == 0:
+            arr_result = 0
+        else:
+            # Traverse through all array elements
+            for item in arr_result:
+                if not isinstance(item, int):
+                    arr_result = 2
+                    break
+                else:
+                    pass
+            if arr_result != 2:
+                for i in range(n - 1):
+                    # range(n) also work but outer loop will
+                    # repeat one time more than needed.
 
-def test_bubble_sort_descending():
-    result = []
-    input_arr = [64, 34, 25, 12, 22, 11, 90]
-    test_arr = [90, 64, 34, 25, 22, 12, 11]
+                    # Last i elements are already in place
+                    for j in range(0, n - i - 1):
 
-    result = Lab3.bubble_sort(input_arr, Lab3.SORT_DESCENDING)
+                        if sorting_order == SORT_ASCENDING:
+                            if arr_result[j] > arr_result[j + 1]:
+                                arr_result[j], arr_result[j + 1] = arr_result[j + 1], arr_result[j]
 
-    assert (result == test_arr)
 
-def test_bubble_sort_invalid():
-    result = []
-    input_arr = [64, 34, 25, 12, 22, 11, 90]
+                        elif sorting_order == SORT_DESCENDING:
+                            if arr_result[j] < arr_result[j + 1]:
+                                arr_result[j], arr_result[j + 1] = arr_result[j + 1], arr_result[j]
 
-    result = Lab3.bubble_sort(input_arr, 3)
+                        else:
+                            # Return an empty array
+                            arr_result = []
+    else:
+        arr_result = 1
 
-    assert (result == [])
+    return arr_result
+
+
+def main():
+    # Driver code to test above
+    arr = [64, 34, 25, 12, 22, 11, 90]
+
+    # Sort in ascending order
+    result = bubble_sort(arr, SORT_ASCENDING)
+    print("\nSorted array in ascending order: ")
+    print(result)
+
+    # Sort in descending order
+    print("Sorted array in ascending order: ")
+    result = bubble_sort(arr, SORT_DESCENDING)
+    print(result)
+
+
+if __name__ == "__main__":
+    main()
